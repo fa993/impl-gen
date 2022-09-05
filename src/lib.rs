@@ -17,23 +17,27 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
     
     // println!("{:#}", attr);
 
-    let attr_ast = syn::parse(attr).expect("Attr failed");
-    println!("Hello");
+    
+
+    // let attr_ast = syn::parse(attr).expect("Attr failed");
+    // println!("Hello");
     let struct_ast = syn::parse(item).expect("Struct failed");
     println!("Hello pt2");
 
-    impl_gen_macro(&attr_ast, &struct_ast);
+    impl_gen_macro(&attr, &struct_ast);
 
     todo!()
 
 }
 
-fn impl_gen_macro(attr_ast: &syn::DeriveInput, struct_ast: &syn::DeriveInput) -> TokenStream {
+fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::DeriveInput) -> TokenStream {
+    let str_name = attrs.to_string();
+    let names = str_name.split(',').collect::<Vec<_>>();
     let name = &struct_ast.ident;
-    let fn_name = format_ident!("get_{}", name);
-    // println!("{:?}", attr_ast);
+    let fn_name = format_ident!("get_{}", names[1].trim().to_case(Case::Snake));
+    let trait_name = format_ident!("{}", names[0].trim());
     let gen = quote! {
-        impl HelloMacro for #name {
+        impl #trait_name for #name {
             fn #fn_name() {
                 println!("Hello, Macro! My name is {}!", stringify!(#name));
             }
