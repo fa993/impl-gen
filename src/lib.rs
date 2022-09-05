@@ -25,12 +25,8 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
     let name_token = match struct_ast {
-        Item::Type(t) => {
-            t.ident.to_string()
-        },
-        Item::Struct(t) => {
-            t.ident.to_string()
-        }, 
+        Item::Type(t) => &t.ident,
+        Item::Struct(t) => &t.ident, 
         _ => {
             unimplemented!();
         }
