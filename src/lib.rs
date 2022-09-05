@@ -27,9 +27,23 @@ fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
     let name_token = match struct_ast {
         Item::Type(t) => &t.ident,
         Item::Struct(t) => &t.ident, 
-        _ => {
-            unimplemented!();
-        }
+        Item::Const(_) => {println!("Const"); todo!()},
+        Item::Enum(_) => {println!("Enum"); todo!()},
+        Item::ExternCrate(_) => {println!("ExternCrate"); todo!()},
+        Item::Fn(_) => {println!("Fn"); todo!()},
+        Item::ForeignMod(_) => {println!("ForeignMod"); todo!()},
+        Item::Impl(_) => {println!("Impl"); todo!()},
+        Item::Macro(_) => {println!("Macro"); todo!()},
+        Item::Macro2(_) => {println!("Macro2"); todo!()},
+        Item::Mod(_) => {println!("Mod"); todo!()},
+        Item::Static(_) => {println!("Static"); todo!()},
+        Item::Trait(_) => {println!("Trait"); todo!()},
+        Item::TraitAlias(_) => {println!("TraitAlias"); todo!()},
+        Item::Union(_) => {println!("Union"); todo!()},
+        Item::Use(_) => {println!("Use"); todo!()},
+        Item::Verbatim(_) => {println!("Verbatim"); todo!()},
+        _ => {println!("Nothing"); todo!()}
+
     };
     let str_name = attrs.to_string();
     let names = str_name.split(',').collect::<Vec<_>>();
