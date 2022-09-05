@@ -45,6 +45,8 @@ fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
         _ => {println!("Nothing"); todo!()}
 
     };
+
+    println!("HElloow");
     let str_name = attrs.to_string();
     let names = str_name.split(',').collect::<Vec<_>>();
     let fn_name = format_ident!("get_{}", names[1].trim().to_case(Case::Snake));
