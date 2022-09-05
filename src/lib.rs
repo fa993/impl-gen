@@ -32,8 +32,6 @@ fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
     let fn_name = names[1].trim().to_case(Case::Snake);
     let trait_name = format_ident!("{}", names[0].trim());
 
-    println!("{}", trait_name);
-
     let gen = quote! {
 
         #struct_ast
