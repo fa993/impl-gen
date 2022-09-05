@@ -29,7 +29,7 @@ fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
     };
     let str_name = attrs.to_string();
     let names = str_name.split(',').collect::<Vec<_>>();
-    let fn_name = format_ident!("{}", names[1].trim().to_case(Case::Snake));
+    let fn_name = names[1].trim().to_case(Case::Snake);
     let trait_name = format_ident!("{}", names[0].trim());
     let gen = quote! {
 
