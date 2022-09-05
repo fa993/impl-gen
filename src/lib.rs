@@ -15,7 +15,7 @@ use convert_case::{Case, Casing};
 #[proc_macro_attribute]
 pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
     
-    println!("{:#}", attr);
+    // println!("{:#}", attr);
 
     let attr_ast = syn::parse(attr).expect("Attr failed");
     println!("Hello");
