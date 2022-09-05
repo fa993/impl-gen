@@ -9,32 +9,33 @@ mod tests {
 
 use proc_macro::TokenStream;
 use quote::{quote, format_ident};
-use syn;
+use syn::{self, Item, Ident};
 use convert_case::{Case, Casing};
 
 #[proc_macro_attribute]
 pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
     
-    // println!("{:#}", attr);
+    let struct_ast = syn::parse::<Item>(item).expect("Could not parse item");
 
-    
-
-    // let attr_ast = syn::parse(attr).expect("Attr failed");
-    // println!("Hello");
-    // let struct_ast = syn::parse(item).expect("Struct failed");
-    // println!("Hello pt2");
-
-    for t in item.into_iter() {
-        println!("{}", t);
+    let name_token = match struct_ast {
+        Item::Type(t) => {
+            t.ident
+        },
+        Item::Struct(t) => {
+            t.ident
+        } 
+        _ => {
+            unimplemented!();
+        }
     };
 
-    impl_gen_macro(&attr, unimplemented!());
+    impl_gen_macro(&attr, &name_token);
 
     todo!()
 
 }
 
-fn impl_gen_macro(attrs: &TokenStream, name: &str) -> TokenStream {
+fn impl_gen_macro(attrs: &TokenStream, name: &Ident) -> TokenStream {
     let str_name = attrs.to_string();
     let names = str_name.split(',').collect::<Vec<_>>();
     let fn_name = format_ident!("get_{}", names[1].trim().to_case(Case::Snake));
