@@ -21,7 +21,7 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
 }
 
 fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
-    let name_token = match struct_ast {
+    let name_token = match &struct_ast {
         Item::Type(t) => &t.ident,
         Item::Struct(t) => &t.ident, 
         _ => {println!("Nothing"); todo!()}
@@ -32,6 +32,9 @@ fn impl_gen_macro(attrs: &TokenStream, struct_ast: &syn::Item) -> TokenStream {
     let fn_name = format_ident!("get_{}", names[1].trim().to_case(Case::Snake));
     let trait_name = format_ident!("{}", names[0].trim());
     let gen = quote! {
+
+        #struct_ast
+
         impl #trait_name for #name_token {
             fn get_id() -> &'static str {
                 #fn_name
