@@ -7,6 +7,8 @@ mod tests {
     }
 }
 
+use std::any::Any;
+
 use proc_macro::TokenStream;
 use quote::{quote, format_ident, ToTokens};
 use syn::{self, Item, Ident};
@@ -17,7 +19,7 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
     
     let struct_ast = syn::parse::<Item>(item).expect("Could not parse item");
 
-    println!("{}", struct_ast.to_token_stream());
+    println!("{:?}", struct_ast.type_id());
 
     let name_token = match struct_ast {
         Item::Type(t) => {
@@ -25,7 +27,7 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
         },
         Item::Struct(t) => {
             t.ident
-        } 
+        }, 
         _ => {
             unimplemented!();
         }
