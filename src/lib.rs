@@ -8,8 +8,9 @@ mod tests {
 }
 
 use proc_macro::TokenStream;
-use quote::quote;
+use quote::{quote, format_ident};
 use syn;
+use convert_case::{Case, Casing};
 
 #[proc_macro_attribute]
 pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
@@ -26,11 +27,13 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
 }
 
 fn impl_gen_macro(attr_ast: &syn::DeriveInput, struct_ast: &syn::DeriveInput) -> TokenStream {
+    println!("Hello");
     let name = &struct_ast.ident;
+    let fn_name = format_ident!("get_{}", name);
     // println!("{:?}", attr_ast);
     let gen = quote! {
         impl HelloMacro for #name {
-            fn hello_macro() {
+            fn #fn_name() {
                 println!("Hello, Macro! My name is {}!", stringify!(#name));
             }
         }
