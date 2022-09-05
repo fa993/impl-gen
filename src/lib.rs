@@ -18,7 +18,9 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
     println!("{:#}", attr);
 
     let attr_ast = syn::parse(attr).expect("Attr failed");
+    println!("Hello");
     let struct_ast = syn::parse(item).expect("Struct failed");
+    println!("Hello pt2");
 
     impl_gen_macro(&attr_ast, &struct_ast);
 
@@ -27,7 +29,6 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
 }
 
 fn impl_gen_macro(attr_ast: &syn::DeriveInput, struct_ast: &syn::DeriveInput) -> TokenStream {
-    println!("Hello");
     let name = &struct_ast.ident;
     let fn_name = format_ident!("get_{}", name);
     // println!("{:?}", attr_ast);
