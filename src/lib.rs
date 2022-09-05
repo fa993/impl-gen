@@ -17,6 +17,8 @@ pub fn impl_gen(attr: TokenStream, item: TokenStream) -> TokenStream {
     
     let struct_ast = syn::parse::<Item>(item).expect("Could not parse item");
 
+    println!("{}", struct_ast);
+
     let name_token = match struct_ast {
         Item::Type(t) => {
             t.ident
